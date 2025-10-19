@@ -1,0 +1,22 @@
+`ifdef VERILATOR
+`verilator_config
+
+lint_off -rule TIMESCALEMOD
+
+// Direction of the bit range
+lint_off -rule ASCRANGE -file "*/tm1638_registers.sv" -match "* left < right of bit range: [0:7]"
+
+lint_off -rule UNUSEDPARAM  -file "*/lab_top.sv"                           -match "*clk_mhz*"
+
+lint_off -rule UNUSEDSIGNAL -file "*/lab_top.sv"                           -match "*'key'[7:2]"
+lint_off -rule UNUSEDSIGNAL -file "*/lab_top.sv"                           -match "*'mic'"
+lint_off -rule UNUSEDSIGNAL -file "*/lab_top.sv"                           -match "*'slow_clk'"
+lint_off -rule UNUSEDSIGNAL -file "*/lab_top.sv"                           -match "*'sw'"
+lint_off -rule UNUSEDSIGNAL -file "*/lab_top.sv"                           -match "*'uart_rx'"
+lint_off -rule UNUSEDSIGNAL -file "*/layer_between_project_and_lab_top.sv" -match "*'pixel_clk'"
+lint_off -rule UNUSEDSIGNAL -file "*/layer_between_project_and_lab_top.sv" -match "*'sound'"
+lint_off -rule UNUSEDSIGNAL -file "*/layer_between_project_and_lab_top.sv" -match "*'uart_tx'"
+lint_off -rule UNUSEDSIGNAL -file "*/layer_between_project_and_lab_top.sv" -match "*'vpos'[9]"
+lint_off -rule UNUSEDSIGNAL -file "*/tm1638_board.sv"                      -match "*'tm_out'[7:5,3:1]"
+
+`endif
