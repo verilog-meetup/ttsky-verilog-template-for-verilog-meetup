@@ -24,6 +24,18 @@ used in [TT10 Demoscene](https://tinytapeout.com/competitions/demoscene-ttihp/) 
 
 6. Adds hooks to the documentation and other text files to make use of the template easier. Just grep for `TODO`.
 
+## Credits
+
+Yuri Panchul and Verilog Meetup, with contributions from:
+
+TM1638 interface module support, based on Alan Garfield's implementation:
+Alexander Kirichenko, Ruslan Zalata and Anton Malakhov.
+
+Sound recognition with INMP441 microphone: Victor Prutyanov and Vadim Ostrikov.
+
+and other contributors to the basics-graphics-music (BGM) project:
+https://github.com/yuri-panchul/basics-graphics-music
+
 Below is the original text from the Tiny Tapeout GitHub repository.
 
 # Tiny Tapeout Verilog Project Template
