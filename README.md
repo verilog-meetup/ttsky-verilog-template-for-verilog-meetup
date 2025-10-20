@@ -28,13 +28,11 @@ used in [TT10 Demoscene](https://tinytapeout.com/competitions/demoscene-ttihp/) 
 
 Yuri Panchul and Verilog Meetup, with contributions from:
 
-TM1638 interface module support, based on Alan Garfield's implementation:
-Alexander Kirichenko, Ruslan Zalata and Anton Malakhov.
+* TM1638 interface module support, based on Alan Garfield's implementation: Alexander Kirichenko, Ruslan Zalata and Anton Malakhov.
 
-Sound recognition with INMP441 microphone: Victor Prutyanov and Vadim Ostrikov.
+* Sound recognition with INMP441 microphone: Victor Prutyanov and Vadim Ostrikov.
 
-and other contributors to the basics-graphics-music (BGM) project:
-https://github.com/yuri-panchul/basics-graphics-music
+* Other contributors to the [basics-graphics-music (BGM)](https://github.com/yuri-panchul/basics-graphics-music) project.
 
 Below is the original text from the Tiny Tapeout GitHub repository.
 
