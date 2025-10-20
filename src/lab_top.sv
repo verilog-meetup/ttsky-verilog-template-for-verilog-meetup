@@ -105,7 +105,7 @@ module lab_top
         if (x > cnt1)
             red = '1;
 
-        if (y > cnt2)
+        if (x + y > cnt2)
             green = '1;
     end
 
