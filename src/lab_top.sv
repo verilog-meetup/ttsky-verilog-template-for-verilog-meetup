@@ -70,6 +70,14 @@ module lab_top
 
     //------------------------------------------------------------------------
 
+    wire any_sw = | sw;
+
+    localparam w_in = w_key > w_sw ? w_key : w_sw;
+
+    wire [w_in - 1:0] in = any_sw ? w_in' (sw) : w_in' (key);
+
+    //------------------------------------------------------------------------
+
     logic [19:0] cnt_e;
 
     always_ff @ (posedge clk)
@@ -96,17 +104,7 @@ module lab_top
         if (cnt2 == '0 | cnt2 == w_y' (screen_height - 1))
             cnt2_d = w_y' (screen_height / 2);
         else
-            cnt2_d = cnt2 + w_y' (key [0]) - w_y' (| key [w_key - 1:1]);
-
-        red   = '0;
-        green = '0;
-        blue  = '0;
-
-        if (x > cnt1)
-            red = '1;
-
-        if (x + y > cnt2)
-            green = '1;
+            cnt2_d = cnt2 + w_y' (in [0]) - w_y' (| in [w_in - 1:1]);
     end
 
     //------------------------------------------------------------------------
@@ -125,19 +123,85 @@ module lab_top
 
     //------------------------------------------------------------------------
 
-    localparam w_number = w_digit * 4;
+    logic       note_vld;
+    logic [3:0] note_idx, sticky_note;
 
-    logic [w_number - 1:0] number
-        = w_number' ({ 16' (cnt1), 16' (cnt2) });
-
-    seven_segment_display # (.w_digit (w_digit)) i_7segment
+      note_recognizer
+    # (.clk_mhz (clk_mhz))
+    i_note_recognizer
     (
-        .clk      ( clk      ),
-        .rst      ( rst      ),
-        .number   ( number   ),
-        .dots     ( '0       ),
-        .abcdefgh ( abcdefgh ),
-        .digit    ( digit    )
+        .clk,
+        .rst,
+
+        .mic,
+
+        .note_vld,
+        .note_idx,
+
+        .abcdefgh
     );
+
+    assign digit = '1;
+
+    always_ff @ (posedge clk)
+        if (rst)
+            sticky_note <= '1;
+        else if (note_vld)
+            sticky_note <= note_idx;
+
+    //------------------------------------------------------------------------
+
+    localparam w_xy = (w_x > w_y ? w_x : w_y) * 2;
+
+    always_comb
+    begin
+        red   = '0;
+        green = '0;
+        blue  = '0;
+
+        case (sticky_note)
+        4'd0, 4'd3, 4'd6, 4'd9:
+
+            if (x < cnt1)
+            begin
+                red   = w_red'   ((x + y) >> 3);
+                green = w_green' ((x - y) >> 3);
+                blue  = w_blue'  ( x      >> 3);
+            end
+
+        4'd1, 4'd4, 4'd7, 4'd10:
+
+            // if ((x - cnt1) * (y - cnt2) < w_xy' ((screen_width * screen_height) / 16))
+            if (y > cnt2)
+            begin
+                red   = w_red'   (x >> 3);
+                green = w_green' (y >> 3);
+                blue  = '1;
+            end
+
+        4'd2, 4'd5, 4'd8, 4'd11:
+
+            // if ((x - cnt1) ** 2 + (y - cnt2) ** 2 < w_xy' ((screen_width * screen_height) / 12))
+            if (x + y < cnt1 + cnt2)
+            begin
+                red   = '1;
+                green = '1;
+                blue  = w_blue' ((x + y) >> 3);
+            end
+
+        default:
+
+            begin
+                if (x < cnt1)
+                    red = '1;
+                else
+                    blue = '1;
+
+                if (y < cnt2)
+                    green = '1;
+            end
+
+        endcase
+    end
 
 endmodule

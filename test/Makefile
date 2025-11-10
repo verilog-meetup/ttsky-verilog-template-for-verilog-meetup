@@ -13,6 +13,7 @@ PROJECT_SOURCES =                         \
     seven_segment_display.sv              \
                                           \
     lab_top.sv                            \
+    note_recognizer.sv                    \
                                           \
     tm1638_registers.sv                   \
     tm1638_board.sv                       \

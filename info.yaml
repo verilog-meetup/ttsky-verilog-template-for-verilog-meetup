@@ -22,6 +22,7 @@ project:
     - "lab_specific_board_config.svh"
     - "lab_top.sv"
     - "layer_between_project_and_lab_top.sv"
+    - "note_recognizer.sv"
     - "project.v"
     - "project.vlt"
     - "seven_segment_display.sv"
